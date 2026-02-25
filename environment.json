@@ -1,0 +1,11 @@
+{
+  "id": "paylocity-env",
+  "name": "local",
+  "values": [
+    {
+      "key": "baseUrl",
+      "value": "https://wmxrwq14uc.execute-api.us-east-1.amazonaws.com/Prod",
+      "enabled": true
+    }
+  ]
+}

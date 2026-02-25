@@ -1,0 +1,1375 @@
+{
+  "info": {
+    "_postman_id": "72e3c5f4-d220-442f-a301-1cde9021d157",
+    "name": "Paylocity Benefits API",
+    "description": "Paylocity Benefits API\n\nContact Support:\n Name: Paylocity Corporation",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "12607245"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "Employees",
+          "item": [
+            {
+              "name": "POST tests",
+              "item": [
+                {
+                  "name": "create user",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 200\", function () {\r",
+                          "    pm.response.to.have.status(200);\r",
+                          "});\r",
+                          "\r",
+                          "pm.test(\"Response is valid JSON\", function () {\r",
+                          "    pm.response.to.be.json;\r",
+                          "});\r",
+                          "\r",
+                          "let json;\r",
+                          "try {\r",
+                          "    json = pm.response.json();\r",
+                          "} catch (e) {\r",
+                          "    json = null;\r",
+                          "}\r",
+                          "\r",
+                          "pm.test(\"Response body parsed\", function () {\r",
+                          "    pm.expect(json).to.be.an(\"object\");\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    },
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "exec": [
+                          ""
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "value",
+                          "value": "Basic VGVzdFVzZXI4ODQ6OFs2aE0yW3N5RnMr",
+                          "type": "string"
+                        },
+                        {
+                          "key": "key",
+                          "value": "Authorization",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"firstName\": \"string\",\n    \"lastName\": \"string\",\n    \"username\": \"\",\n    \"id\": \"20fd2269-a0dc-a86e-897d-c5d73a44b93e\",\n    \"dependants\": 15,\n    \"expiration\": \"2007-01-22T07:57:06.961Z\",\n    \"salary\": 1180.5455738980063\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/Employees",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "Employees"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "without username",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 400\", function () {\r",
+                          "    pm.response.to.have.status(400);\r",
+                          "});\r",
+                          "\r",
+                          "var jsonData = pm.response.json();\r",
+                          "\r",
+                          "pm.test(\"Error message is correct\", function () {\r",
+                          "    pm.expect(jsonData[0].errorMessage).to.contain(\"username\");\r",
+                          "    pm.expect(jsonData[0].errorMessage).to.contain(\"is required\");\r",
+                          "});\r",
+                          "\r",
+                          "pm.test(\"Member names array contains 'username'\", function () {\r",
+                          "    pm.expect(jsonData[0].memberNames).to.include(\"username\");\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "value",
+                          "value": "Basic VGVzdFVzZXI4ODQ6OFs2aE0yW3N5RnMr",
+                          "type": "string"
+                        },
+                        {
+                          "key": "key",
+                          "value": "Authorization",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"dependants\": 15,\n    \"expiration\": \"2007-01-22T07:57:06.961Z\",\n    \"salary\": 1180.5455738980063\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/Employees",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "Employees"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "with long properties",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 400\", function () {\r",
+                          "    pm.response.to.have.status(400);\r",
+                          "});\r",
+                          "\r",
+                          "let jsonData = pm.response.json();\r",
+                          "\r",
+                          "pm.test(\"Response contains error messages for each field\", function () {\r",
+                          "    pm.expect(jsonData).to.have.lengthOf(3);\r",
+                          "    \r",
+                          "    jsonData.forEach((item, index) => {\r",
+                          "        pm.expect(item.errorMessage).to.contain(\"maximum length of 50\");\r",
+                          "    });\r",
+                          "});\r",
+                          "\r",
+                          "pm.test(\"Member names contain expected fields\", function () {\r",
+                          "    pm.expect(jsonData).to.have.lengthOf(3);\r",
+                          "    \r",
+                          "    let arr = [];\r",
+                          "    let expectedArr = [\"username\", \"firstName\", \"lastName\"];\r",
+                          "    jsonData.forEach((item, index) => {\r",
+                          "        arr.push(item.memberNames);\r",
+                          "    });\r",
+                          "\r",
+                          "    pm.expect(expectedArr).to.deep.equal(arr);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "value",
+                          "value": "Basic VGVzdFVzZXI4ODQ6OFs2aE0yW3N5RnMr",
+                          "type": "string"
+                        },
+                        {
+                          "key": "key",
+                          "value": "Authorization",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"username\": \"veryveryveryveryveryverylongusernamewithmorethan50chars\",\n    \"firstName\": \"Very Very Very long First Name With exact  51 chars\",\n    \"lastName\": \"Very Very Very long Last Name With exact   51 chars\",\n    \"dependants\": 15,\n    \"expiration\": \"2007-01-22T07:57:06.961Z\",\n    \"salary\": 1180.5455738980063\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/Employees",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "Employees"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "without firstname",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 400\", function () {\r",
+                          "    pm.response.to.have.status(400);\r",
+                          "});\r",
+                          "\r",
+                          "var jsonData = pm.response.json();\r",
+                          "\r",
+                          "pm.test(\"Error message is correct\", function () {\r",
+                          "    let errorMessage = jsonData[0].errorMessage;\r",
+                          "    pm.expect(errorMessage).to.contain(\"firstName\");\r",
+                          "    pm.expect(errorMessage).to.contain(\"is required\");\r",
+                          "});\r",
+                          "\r",
+                          "pm.test(\"Member names array contains 'username'\", function () {\r",
+                          "    pm.expect(jsonData[0].memberNames).to.include(\"firstName\");\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "value",
+                          "value": "Basic VGVzdFVzZXI4ODQ6OFs2aE0yW3N5RnMr",
+                          "type": "string"
+                        },
+                        {
+                          "key": "key",
+                          "value": "Authorization",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"username\": \"johndoe\",\n    \"lastName\": \"Doe\",\n    \"dependants\": 15,\n    \"expiration\": \"2007-01-22T07:57:06.961Z\",\n    \"salary\": 1180.5455738980063\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/Employees",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "Employees"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "without lastname",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 400\", function () {\r",
+                          "    pm.response.to.have.status(400);\r",
+                          "});\r",
+                          "\r",
+                          "var jsonData = pm.response.json();\r",
+                          "\r",
+                          "pm.test(\"Error message is correct\", function () {\r",
+                          "    let errorMessage = jsonData[0].errorMessage;\r",
+                          "    pm.expect(errorMessage).to.contain(\"lastName\");\r",
+                          "    pm.expect(errorMessage).to.contain(\"is required\");\r",
+                          "});\r",
+                          "\r",
+                          "pm.test(\"Member names array contains 'lastname'\", function () {\r",
+                          "    pm.expect(jsonData[0].memberNames).to.include(\"lastName\");\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "value",
+                          "value": "Basic VGVzdFVzZXI4ODQ6OFs2aE0yW3N5RnMr",
+                          "type": "string"
+                        },
+                        {
+                          "key": "key",
+                          "value": "Authorization",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"username\": \"johndoe\",\n    \"firstName\": \"John\",\n    \"dependants\": 15,\n    \"expiration\": \"2007-01-22T07:57:06.961Z\",\n    \"salary\": 1180.5455738980063\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/Employees",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "Employees"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "dependants over max",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 400\", function () {\r",
+                          "    pm.response.to.have.status(400);\r",
+                          "});\r",
+                          "\r",
+                          "var jsonData = pm.response.json();\r",
+                          "\r",
+                          "pm.test(\"Error message is correct\", function () {\r",
+                          "    pm.expect(jsonData[0].errorMessage).to.contain(\"betweeen 0 and 32\");\r",
+                          "});\r",
+                          "\r",
+                          "pm.test(\"Member names array contains 'dependants'\", function () {\r",
+                          "    pm.expect(jsonData[0].memberNames).to.include(\"dependants\");\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "value",
+                          "value": "Basic VGVzdFVzZXI4ODQ6OFs2aE0yW3N5RnMr",
+                          "type": "string"
+                        },
+                        {
+                          "key": "key",
+                          "value": "Authorization",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"username\": \"johndoe\",\n    \"firstName\": \"John\",\n    \"lastName\": \"John\",\n    \"dependants\": 33,\n    \"expiration\": \"2007-01-22T07:57:06.961Z\",\n    \"salary\": 1180.5455738980063\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/Employees",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "Employees"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "negative dependants",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 400\", function () {\r",
+                          "    pm.response.to.have.status(400);\r",
+                          "});\r",
+                          "\r",
+                          "var jsonData = pm.response.json();\r",
+                          "\r",
+                          "pm.test(\"Error message is correct\", function () {\r",
+                          "    pm.expect(jsonData[0].errorMessage).to.contain(\"betweeen 0 and 32\");\r",
+                          "});\r",
+                          "\r",
+                          "pm.test(\"Member names array contains 'dependants'\", function () {\r",
+                          "    pm.expect(jsonData[0].memberNames).to.include(\"dependants\");\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "value",
+                          "value": "Basic VGVzdFVzZXI4ODQ6OFs2aE0yW3N5RnMr",
+                          "type": "string"
+                        },
+                        {
+                          "key": "key",
+                          "value": "Authorization",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"username\": \"johndoe\",\n    \"firstName\": \"John\",\n    \"lastName\": \"John\",\n    \"dependants\": -1,\n    \"expiration\": \"2007-01-22T07:57:06.961Z\",\n    \"salary\": 1180.5455738980063\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/Employees",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "Employees"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "PUT tests",
+              "item": [
+                {
+                  "name": "create new employee",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 201\", function () {\r",
+                          "    pm.response.to.have.status(201);\r",
+                          "});\r",
+                          "\r",
+                          "// save employee id for future\r",
+                          "let employeeId = pm.response.json().id;\r",
+                          "pm.collectionVariables.set(\"employeeId\", employeeId);"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "value",
+                          "value": "Basic VGVzdFVzZXI4ODQ6OFs2aE0yW3N5RnMr",
+                          "type": "string"
+                        },
+                        {
+                          "key": "key",
+                          "value": "Authorization",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"firstName\": \"New\",\n  \"lastName\": \"Employee\",\n  \"username\": \"newemployee\",\n  \"id\": \"{{$guid}}\",\n  \"dependants\": 15,\n  \"expiration\": \"2007-01-22T07:57:06.961Z\",\n  \"salary\": 1180.5455738980063\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/Employees",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "Employees"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "modify existing employee",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 200\", function () {\r",
+                          "    pm.response.to.have.status(200);\r",
+                          "});\r",
+                          "\r",
+                          "pm.test(\"Response is valid JSON\", function () {\r",
+                          "    pm.response.to.be.json;\r",
+                          "});\r",
+                          "\r",
+                          "pm.test(\"Response has expected id\", function () {\r",
+                          "    pm.expect(pm.response.json().id).to.equal(pm.collectionVariables.get(\"employeeId\"));\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    },
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "exec": [
+                          ""
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "value",
+                          "value": "Basic VGVzdFVzZXI4ODQ6OFs2aE0yW3N5RnMr",
+                          "type": "string"
+                        },
+                        {
+                          "key": "key",
+                          "value": "Authorization",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"firstName\": \"Existing\",\n  \"lastName\": \"Employee\",\n  \"username\": \"existingemployee\",\n  \"id\": \"{{employeeId}}\",\n  \"dependants\": 15,\n  \"expiration\": \"2007-01-22T07:57:06.961Z\",\n  \"salary\": 1180.5455738980063\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/Employees",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "Employees"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "DELETE:id tests",
+              "item": [
+                {
+                  "name": "delete non-existing employee",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 204 or 404\", function () {\r",
+                          "    pm.expect(pm.response.code).to.be.oneOf([204, 404]);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "value",
+                          "value": "Basic VGVzdFVzZXI4ODQ6OFs2aE0yW3N5RnMr",
+                          "type": "string"
+                        },
+                        {
+                          "key": "key",
+                          "value": "Authorization",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/Employees/{{$guid}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "Employees",
+                        "{{$guid}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "delete existing employee",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 200\", function () {\r",
+                          "    pm.response.to.have.status(200);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "value",
+                          "value": "Basic VGVzdFVzZXI4ODQ6OFs2aE0yW3N5RnMr",
+                          "type": "string"
+                        },
+                        {
+                          "key": "key",
+                          "value": "Authorization",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/Employees/{{employeeId}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "Employees",
+                        "{{employeeId}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "GET:id tests",
+              "item": [
+                {
+                  "name": "get existing user",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 200\", function () {\r",
+                          "    pm.response.to.have.status(200);\r",
+                          "});  \r",
+                          "\r",
+                          "pm.test(\"Content-Type header contains application/json\", function () {\r",
+                          "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+                          "});\r",
+                          "\r",
+                          "pm.test(\"Response body has required properties with correct types\", function () {\r",
+                          "    const jsonData = pm.response.json();\r",
+                          "    \r",
+                          "    // Assert id is a string\r",
+                          "    pm.expect(jsonData).to.have.property(\"id\");\r",
+                          "    pm.expect(jsonData.id).to.be.a(\"string\");\r",
+                          "    \r",
+                          "    // Assert firstName is a string\r",
+                          "    pm.expect(jsonData).to.have.property(\"firstName\");\r",
+                          "    pm.expect(jsonData.firstName).to.be.a(\"string\");\r",
+                          "    \r",
+                          "    // Assert lastName is a string\r",
+                          "    pm.expect(jsonData).to.have.property(\"lastName\");\r",
+                          "    pm.expect(jsonData.lastName).to.be.a(\"string\");\r",
+                          "});\r",
+                          "\r",
+                          "pm.test(\"Employee ID in response matches request path variable\", function () {\r",
+                          "    const jsonData = pm.response.json();\r",
+                          "    const requestedEmployeeId = pm.variables.get(\"employeeId\");\r",
+                          "    \r",
+                          "    // Convert both to string for comparison (in case of type mismatch)\r",
+                          "    pm.expect(String(jsonData.id)).to.eql(String(requestedEmployeeId));\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "value",
+                          "value": "Basic VGVzdFVzZXI4ODQ6OFs2aE0yW3N5RnMr",
+                          "type": "string"
+                        },
+                        {
+                          "key": "key",
+                          "value": "Authorization",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/Employees/{{employeeId}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "Employees",
+                        "{{employeeId}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "get non-existing user",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 404\", function () {\r",
+                          "    pm.response.to.have.status(404);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "value",
+                          "value": "Basic VGVzdFVzZXI4ODQ6OFs2aE0yW3N5RnMr",
+                          "type": "string"
+                        },
+                        {
+                          "key": "key",
+                          "value": "Authorization",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/Employees/{{$guid}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "Employees",
+                        "{{$guid}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "Employees list changing",
+              "item": [
+                {
+                  "name": "get employees count",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "// save employees count for future\r",
+                          "let count = pm.response.json().length;\r",
+                          "pm.collectionVariables.set(\"employeesCount\", count);"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "value",
+                          "value": "Basic VGVzdFVzZXI4ODQ6OFs2aE0yW3N5RnMr",
+                          "type": "string"
+                        },
+                        {
+                          "key": "key",
+                          "value": "Authorization",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/Employees",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "Employees"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "add employee",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 200\", function () {\r",
+                          "    pm.response.to.have.status(200);\r",
+                          "});\r",
+                          "\r",
+                          "let employeeId = pm.response.json().id;\r",
+                          "pm.collectionVariables.set(\"id\", employeeId);"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    },
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "exec": [
+                          ""
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "value",
+                          "value": "Basic VGVzdFVzZXI4ODQ6OFs2aE0yW3N5RnMr",
+                          "type": "string"
+                        },
+                        {
+                          "key": "key",
+                          "value": "Authorization",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"username\": \"johndoe\",\n    \"dependants\": 15,\n    \"expiration\": \"2007-01-22T07:57:06.961Z\",\n    \"salary\": 1180.5455738980063\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/Employees",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "Employees"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "employees count was increased",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Check if the number of employees is correct\", function () {\r",
+                          "    let currentCount = pm.response.json().length;\r",
+                          "    let savedCount = pm.collectionVariables.get(\"employeesCount\");\r",
+                          "    pm.expect(currentCount).equal(savedCount+1);\r",
+                          "    pm.collectionVariables.set(\"employeesCount\", currentCount);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "value",
+                          "value": "Basic VGVzdFVzZXI4ODQ6OFs2aE0yW3N5RnMr",
+                          "type": "string"
+                        },
+                        {
+                          "key": "key",
+                          "value": "Authorization",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/Employees",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "Employees"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "delete employee",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Status code is 200\", function () {\r",
+                          "    pm.response.to.have.status(200);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "value",
+                          "value": "Basic VGVzdFVzZXI4ODQ6OFs2aE0yW3N5RnMr",
+                          "type": "string"
+                        },
+                        {
+                          "key": "key",
+                          "value": "Authorization",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/Employees/{{id}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "Employees",
+                        "{{id}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "employees count was decreased",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "pm.test(\"Check if the number of employees is correct\", function () {\r",
+                          "    let currentCount = pm.response.json().length;\r",
+                          "    let savedCount = pm.collectionVariables.get(\"employeesCount\");\r",
+                          "    pm.expect(currentCount).equal(savedCount-1);\r",
+                          "    pm.collectionVariables.set(\"employeesCount\", currentCount);\r",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "request": {
+                    "auth": {
+                      "type": "apikey",
+                      "apikey": [
+                        {
+                          "key": "value",
+                          "value": "Basic VGVzdFVzZXI4ODQ6OFs2aE0yW3N5RnMr",
+                          "type": "string"
+                        },
+                        {
+                          "key": "key",
+                          "value": "Authorization",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/Employees",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "Employees"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "/api/Employees",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "// Test 1: Status code is 200\r",
+                      "pm.test(\"Status code is 200\", function () {\r",
+                      "    pm.response.to.have.status(200);\r",
+                      "});\r",
+                      "\r",
+                      "// Test 2: Response is valid JSON array\r",
+                      "pm.test(\"Response is a valid JSON array\", function () {\r",
+                      "    const jsonData = pm.response.json();\r",
+                      "    pm.expect(jsonData).to.be.an('array');\r",
+                      "});\r",
+                      "\r",
+                      "// Test 3: Every item has properties with correct types\r",
+                      "pm.test(\"Every item has properties with correct types\", function () {\r",
+                      "    const jsonData = pm.response.json();\r",
+                      "    \r",
+                      "    jsonData.forEach((item, index) => {\r",
+                      "        // String properties\r",
+                      "        pm.expect(item).to.have.property('partitionKey').that.is.a('string');\r",
+                      "        pm.expect(item).to.have.property('sortKey').that.is.a('string');\r",
+                      "        pm.expect(item).to.have.property('username').that.is.a('string');\r",
+                      "        pm.expect(item).to.have.property('id').that.is.a('string');\r",
+                      "        pm.expect(item).to.have.property('firstName').that.is.a('string');\r",
+                      "        pm.expect(item).to.have.property('lastName').that.is.a('string');\r",
+                      "        \r",
+                      "        // Number properties\r",
+                      "        pm.expect(item).to.have.property('dependants').that.is.a('number');\r",
+                      "        pm.expect(item).to.have.property('salary').that.is.a('number');\r",
+                      "        pm.expect(item).to.have.property('gross').that.is.a('number');\r",
+                      "        pm.expect(item).to.have.property('benefitsCost').that.is.a('number');\r",
+                      "        pm.expect(item).to.have.property('net').that.is.a('number');\r",
+                      "        \r",
+                      "        // Expiration is a valid ISO date string\r",
+                      "        pm.expect(item).to.have.property('expiration').that.is.a('string');\r",
+                      "        const expirationDate = new Date(item.expiration);\r",
+                      "        pm.expect(expirationDate.toString()).to.not.equal('Invalid Date');\r",
+                      "    });\r",
+                      "});\r",
+                      "\r",
+                      "\r",
+                      "// Test 5: Dependants is an integer between 0 and 32 for all items\r",
+                      "pm.test(\"Dependants is an integer between 0 and 32 for all items\", function () {\r",
+                      "    const jsonData = pm.response.json();\r",
+                      "    \r",
+                      "    jsonData.forEach((item, index) => {\r",
+                      "        pm.expect(Number.isInteger(item.dependants), `Item ${index}: dependants should be an integer`).to.be.true;\r",
+                      "        pm.expect(item.dependants).to.be.at.least(0);\r",
+                      "        pm.expect(item.dependants).to.be.at.most(32);\r",
+                      "    });\r",
+                      "});\r",
+                      "\r",
+                      "// Test 6: Username, firstname, lastname length is at most 50 chars length\r",
+                      "pm.test(\"Username, firstname, lastname length is at most 50 chars length\", function () {\r",
+                      "    const jsonData = pm.response.json();\r",
+                      "    \r",
+                      "    jsonData.forEach((item, index) => {\r",
+                      "        pm.expect(item.username.length).to.be.at.most(50);\r",
+                      "        pm.expect(item.firstname.length).to.be.at.most(50);\r",
+                      "        pm.expect(item.lastname.length).to.be.at.most(50);\r",
+                      "    });\r",
+                      "});\r",
+                      "\r",
+                      "// Test 7: No duplicate IDs in the array\r",
+                      "pm.test(\"No duplicate IDs in the array\", function () {\r",
+                      "    const jsonData = pm.response.json();\r",
+                      "    const ids = jsonData.map(item => item.id);\r",
+                      "    const uniqueIds = [...new Set(ids)];\r",
+                      "    pm.expect(ids.length).to.equal(uniqueIds.length);\r",
+                      "});\r",
+                      "\r",
+                      "// Test 8: Response time is under 1000ms\r",
+                      "pm.test(\"Response time is under 1000ms\", function () {\r",
+                      "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "request": {
+                "auth": {
+                  "type": "apikey",
+                  "apikey": [
+                    {
+                      "key": "value",
+                      "value": "Basic VGVzdFVzZXI4ODQ6OFs2aE0yW3N5RnMr",
+                      "type": "string"
+                    },
+                    {
+                      "key": "key",
+                      "value": "Authorization",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/Employees",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "Employees"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "/Prod"
+    },
+    {
+      "key": "employeeId",
+      "value": ""
+    },
+    {
+      "key": "employeesCount",
+      "value": ""
+    },
+    {
+      "key": "id",
+      "value": ""
+    }
+  ]
+}
